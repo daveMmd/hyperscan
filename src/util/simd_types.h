@@ -34,6 +34,8 @@
 #include "util/intrinsics.h"
 #include "ue2common.h"
 
+#if defined(ARCH_IA32) || defined(ARCH_X86_64)
+
 #if defined(HAVE_SSE2)
 typedef __m128i m128;
 #else
@@ -51,6 +53,15 @@ typedef struct {m128 lo; m128 mid; m128 hi;} m384;
 typedef __m512i m512;
 #else
 typedef struct ALIGN_ATTR(64) {m256 lo; m256 hi;} m512;
+#endif
+
+#elif defined(ARCH_ARM32)
+
+typedef simde__m128i m128;
+typedef struct ALIGN_AVX_DIRECTIVE {m128 lo; m128 hi;} m256;
+typedef struct {m128 lo; m128 mid; m128 hi;} m384;
+typedef struct ALIGN_ATTR(64) {m256 lo; m256 hi;} m512;
+
 #endif
 
 #endif /* SIMD_TYPES_H */

@@ -83,4 +83,8 @@
 #define NO_ASM
 #endif
 
+#if defined(__arm__)
+#define NO_ASM
+#endif
+
 #endif // UTIL_ARCH_H_

@@ -33,6 +33,8 @@
 #include "hs_internal.h"
 #include "util/arch.h"
 
+#if defined(ARCH_IA32) || defined(ARCH_X86_64)
+
 #if !defined(_WIN32) && !defined(CPUID_H_)
 #include <cpuid.h>
 #endif
@@ -157,3 +159,15 @@ u32 cpuid_tune(void) {
 
     return HS_TUNE_FAMILY_GENERIC;
 }
+
+#elif defined(ARCH_ARM32)
+
+u64a cpuid_flags(void) {
+    return 0;
+}
+
+u32 cpuid_tune(void) {
+    return HS_TUNE_FAMILY_GENERIC;
+}
+
+#endif

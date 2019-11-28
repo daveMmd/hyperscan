@@ -33,8 +33,10 @@
 #ifndef SIMD_UTILS
 #define SIMD_UTILS
 
+#if defined(ARCH_IA32) || defined(ARCH_X86_64)
 #if !defined(_WIN32) && !defined(__SSSE3__)
 #error SSSE3 instructions must be enabled
+#endif
 #endif
 
 #include "config.h"

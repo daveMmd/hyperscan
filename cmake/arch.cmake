@@ -2,6 +2,7 @@
 #
 # must be called after determining where compiler intrinsics are defined
 
+if (CMAKE_SYSTEM_PROCESSOR MATCHES "^x86")
 if (HAVE_C_X86INTRIN_H)
     set (INTRIN_INC_H "x86intrin.h")
 elseif (HAVE_C_INTRIN_H)
@@ -57,6 +58,12 @@ int main(){
     __m512i z = _mm512_setzero_si512();
     (void)_mm512_abs_epi8(z);
 }" HAVE_AVX512)
+
+elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
+    set(HAVE_SSSE3 TRUE)
+else()
+    message(FATAL_ERROR "don't support processor " ${CMAKE_SYSTEM_PROCESSOR})
+endif()
 
 if (FAT_RUNTIME)
     if (NOT HAVE_SSSE3)

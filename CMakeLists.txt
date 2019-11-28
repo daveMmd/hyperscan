@@ -186,22 +186,24 @@ else()
         # cpuid info and then chooses the best microarch it can (and replaces
         # the flag), so use that for tune.
 
-        # arg1 might exist if using ccache
-        string (STRIP "${CMAKE_C_COMPILER_ARG1}" CC_ARG1)
-        set (EXEC_ARGS ${CC_ARG1} -c -Q --help=target -march=native -mtune=native)
-        execute_process(COMMAND ${CMAKE_C_COMPILER} ${EXEC_ARGS}
-            OUTPUT_VARIABLE _GCC_OUTPUT)
-        string(REGEX REPLACE ".*march=[ \t]*([^ \n]*)[ \n].*" "\\1"
-            GNUCC_ARCH "${_GCC_OUTPUT}")
+        if (CMAKE_SYSTEM_PROCESSOR MATCHES "^x86")
+            # arg1 might exist if using ccache
+            string (STRIP "${CMAKE_C_COMPILER_ARG1}" CC_ARG1)
+            set (EXEC_ARGS ${CC_ARG1} -c -Q --help=target -march=native -mtune=native)
+            execute_process(COMMAND ${CMAKE_C_COMPILER} ${EXEC_ARGS}
+                OUTPUT_VARIABLE _GCC_OUTPUT)
+            string(REGEX REPLACE ".*march=[ \t]*([^ \n]*)[ \n].*" "\\1"
+                GNUCC_ARCH "${_GCC_OUTPUT}")
 
-        # test the parsed flag
-        set (EXEC_ARGS ${CC_ARG1} -E - -mtune=${GNUCC_ARCH})
-        execute_process(COMMAND ${CMAKE_C_COMPILER} ${EXEC_ARGS}
-            OUTPUT_QUIET ERROR_QUIET
-            INPUT_FILE /dev/null
-            RESULT_VARIABLE GNUCC_TUNE_TEST)
-        if (NOT GNUCC_TUNE_TEST EQUAL 0)
-            message(SEND_ERROR "Something went wrong determining gcc tune: -mtune=${GNUCC_ARCH} not valid")
+            # test the parsed flag
+            set (EXEC_ARGS ${CC_ARG1} -E - -mtune=${GNUCC_ARCH})
+            execute_process(COMMAND ${CMAKE_C_COMPILER} ${EXEC_ARGS}
+                OUTPUT_QUIET ERROR_QUIET
+                INPUT_FILE /dev/null
+                RESULT_VARIABLE GNUCC_TUNE_TEST)
+            if (NOT GNUCC_TUNE_TEST EQUAL 0)
+                message(SEND_ERROR "Something went wrong determining gcc tune: -mtune=${GNUCC_ARCH} not valid")
+            endif()
         endif()
         set(TUNE_FLAG ${GNUCC_ARCH})
     else ()
@@ -283,10 +285,12 @@ else()
 endif()
 
 CHECK_INCLUDE_FILES(unistd.h HAVE_UNISTD_H)
-CHECK_INCLUDE_FILES(intrin.h HAVE_C_INTRIN_H)
-CHECK_INCLUDE_FILE_CXX(intrin.h HAVE_CXX_INTRIN_H)
-CHECK_INCLUDE_FILES(x86intrin.h HAVE_C_X86INTRIN_H)
-CHECK_INCLUDE_FILE_CXX(x86intrin.h HAVE_CXX_X86INTRIN_H)
+if (CMAKE_SYSTEM_PROCESSOR MATCHES "^x86")
+    CHECK_INCLUDE_FILES(intrin.h HAVE_C_INTRIN_H)
+    CHECK_INCLUDE_FILE_CXX(intrin.h HAVE_CXX_INTRIN_H)
+    CHECK_INCLUDE_FILES(x86intrin.h HAVE_C_X86INTRIN_H)
+    CHECK_INCLUDE_FILE_CXX(x86intrin.h HAVE_CXX_X86INTRIN_H)
+endif()
 
 CHECK_FUNCTION_EXISTS(posix_memalign HAVE_POSIX_MEMALIGN)
 CHECK_FUNCTION_EXISTS(_aligned_malloc HAVE__ALIGNED_MALLOC)

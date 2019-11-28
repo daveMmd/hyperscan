@@ -32,10 +32,12 @@
 #include "ue2common.h"
 #include "cpuid_flags.h"
 
+#if defined(ARCH_IA32) || defined(ARCH_X86_64)
 #if !defined(_WIN32) && !defined(CPUID_H_)
 #include <cpuid.h>
 /* system header doesn't have a header guard */
 #define CPUID_H_
+#endif
 #endif
 
 #ifdef __cplusplus
@@ -43,6 +45,7 @@ extern "C"
 {
 #endif
 
+#if defined(ARCH_IA32) || defined(ARCH_X86_64)
 static inline
 void cpuid(unsigned int op, unsigned int leaf, unsigned int *eax,
            unsigned int *ebx, unsigned int *ecx, unsigned int *edx) {
@@ -206,6 +209,34 @@ int check_popcnt(void) {
     cpuid(1, 0, &eax, &ebx, &ecx, &edx);
     return !!(ecx & CPUID_POPCNT);
 }
+#elif defined(ARCH_ARM32)
+ 
+static inline
+int check_ssse3(void) {
+    return 1;
+}
+
+static inline
+int check_sse42(void) {
+    return 0;
+}
+
+static inline
+int check_popcnt(void) {
+    return 0;
+}
+
+static inline
+int check_avx2(void) {
+    return 0;
+}
+
+static inline
+int check_avx512(void) {
+    return 0;
+}
+
+#endif
 
 #ifdef __cplusplus
 } /* extern "C" */

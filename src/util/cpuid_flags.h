@@ -31,10 +31,12 @@
 
 #include "ue2common.h"
 
+#if defined(ARCH_IA32) || defined(ARCH_X86_64)
 #if !defined(_WIN32) && !defined(CPUID_H_)
 #include <cpuid.h>
  /* system header doesn't have a header guard */
 #define CPUID_H_
+#endif
 #endif
 
 #ifdef __cplusplus

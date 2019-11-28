@@ -35,6 +35,7 @@
 
 #include "config.h"
 
+#if defined(ARCH_IA32) || defined(ARCH_X86_64)
 #ifdef __cplusplus
 # if defined(HAVE_CXX_X86INTRIN_H)
 #  define USE_X86INTRIN_H
@@ -61,6 +62,11 @@
 #include <intrin.h>
 #else
 #error no intrinsics file
+#endif
+#elif defined(ARCH_ARM32)
+
+#include "sse_helper.h"
+
 #endif
 
 #endif // INTRINSICS_H

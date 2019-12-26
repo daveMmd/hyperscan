@@ -17,7 +17,7 @@
 
 #cmakedefine ARCH_ARM32
  
-#cmakedefine ARCH_ARM64
+#cmakedefine ARCH_AARCH64
 
 /* internal build, switch on dump support. */
 #cmakedefine DUMP_SUPPORT

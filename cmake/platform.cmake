@@ -14,6 +14,10 @@ elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
     # TODO: XXX
     set(ARCH_32_BIT TRUE)
     set(ARCH_ARM32 TRUE)
+elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^aarch64")
+    # TODO: XXX
+    set(ARCH_64_BIT TRUE)
+    set(ARCH_AARCH64 TRUE)
 else()
     message(FATAL_ERROR "don't support processor " ${CMAKE_SYSTEM_PROCESSOR})
 endif()

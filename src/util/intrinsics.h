@@ -63,7 +63,7 @@
 #else
 #error no intrinsics file
 #endif
-#elif defined(ARCH_ARM32)
+#elif defined(ARCH_ARM32) || defined(ARCH_AARCH64)
 
 #include "sse_helper.h"
 

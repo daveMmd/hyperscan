@@ -160,7 +160,7 @@ u32 cpuid_tune(void) {
     return HS_TUNE_FAMILY_GENERIC;
 }
 
-#elif defined(ARCH_ARM32)
+#elif defined(ARCH_ARM32) || defined(ARCH_AARCH64)
 
 u64a cpuid_flags(void) {
     return 0;

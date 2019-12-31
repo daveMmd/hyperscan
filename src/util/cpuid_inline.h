@@ -209,7 +209,7 @@ int check_popcnt(void) {
     cpuid(1, 0, &eax, &ebx, &ecx, &edx);
     return !!(ecx & CPUID_POPCNT);
 }
-#elif defined(ARCH_ARM32)
+#elif defined(ARCH_ARM32) || defined(ARCH_AARCH64)
  
 static inline
 int check_ssse3(void) {

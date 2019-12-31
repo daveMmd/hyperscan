@@ -61,6 +61,8 @@ int main(){
 
 elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^arm")
     set(HAVE_SSSE3 TRUE)
+elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^aarch64")
+    set(HAVE_SSSE3 TRUE)
 else()
     message(FATAL_ERROR "don't support processor " ${CMAKE_SYSTEM_PROCESSOR})
 endif()

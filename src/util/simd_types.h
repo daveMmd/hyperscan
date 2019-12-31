@@ -53,7 +53,7 @@ typedef __m512i m512;
 #else
 typedef struct ALIGN_ATTR(64) {m256 lo; m256 hi;} m512;
 #endif
-#elif defined(ARCH_ARM32)
+#elif defined(ARCH_ARM32) || defined(ARCH_AARCH64)
 
 typedef simde__m128i m128;
 typedef struct ALIGN_AVX_DIRECTIVE {m128 lo; m128 hi;} m256;

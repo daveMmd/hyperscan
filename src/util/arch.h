@@ -83,7 +83,7 @@
 #define NO_ASM
 #endif
 
-#if defined(__arm__)
+#if defined(__arm__) || defined(__aarch64__)
 #define NO_ASM
 #endif
 

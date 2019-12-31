@@ -19,6 +19,7 @@ include (CMakeDependentOption)
 include (GNUInstallDirs)
 include (${CMAKE_MODULE_PATH}/platform.cmake)
 include (${CMAKE_MODULE_PATH}/ragel.cmake)
+include (${CMAKE_MODULE_PATH}/simde.cmake)
 
 find_package(PkgConfig QUIET)
 

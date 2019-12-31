@@ -31,12 +31,9 @@ set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
 
-set(SIMDE_INCLUDE /home/zzq/dev/simde/simde CACHE PATH "SIMDe include directory")
-
 include_directories(
     ${TOOLCHAIN_DIR}/usr/arm-buildroot-linux-gnueabi/sysroot/include
     ${TOOLCHAIN_DIR}/usr/include
-    ${SIMDE_INCLUDE}
 )
 
 #set(CMAKE_INCLUDE_PATH
